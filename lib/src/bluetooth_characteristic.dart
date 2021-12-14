@@ -50,7 +50,10 @@ class BluetoothCharacteristic {
               (buffer) => new protos.OnCharacteristicChanged.fromBuffer(buffer))
           .where((p) => p.remoteId == deviceId.toString())
           .map((p) => new BluetoothCharacteristic.fromProto(p.characteristic))
-          .where((c) => c.uuid == uuid)
+          .where((c) =>
+              c.uuid == uuid &&
+              c.serviceUuid == serviceUuid &&
+              c.deviceId == deviceId)
           .map((c) {
         // Update the characteristic with the new values
         _updateDescriptors(c.descriptors);
